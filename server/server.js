@@ -18,82 +18,82 @@ app.get('/search', (req, res) => {
       const body = await client.search({
         "index": 'my_test',
         "body": {
-            "size": 100,
-            "query": {
-              "bool": {
-                "should": [
-                  {
-                    "match": {
-                      "Poem Name": myQuery
-                    }
-                  },
-                  {
-                    "match": {
-                      "Interpretation": myQuery
-                    }
-                  },
-                  {
-                    "match": {
-                      "Poem Line": myQuery
-                    }
-                  },
-                  {
-                    "match": {
-                      "Source Domain": myQuery
-                    }
-                  },   
-                  {
-                    "match": {
-                      "Target Domain": myQuery
-                    }
-                  },
-                  {
-                    "match": {
-                      "Metaphoric Terms": myQuery
-                    }
-                  },   
-                  {
-                    "match": {
-                      "Metaphor Type": myQuery
-                    }
-                  },        
-                  {
-                    "match": {
-                      "Poet": myQuery
-                    }
-                  },   
-                  {
-                    "match": {
-                      "Year": myQuery
-                    }
-                  }       
-                ]
-              }
-            },
-            "sort": [
+          "size": 100, 
+          "query": {
+            "bool": {
+              "should": [
                 {
-                  "Has Metaphor.keyword": {
-                    "order": "desc"
+                  "match": {
+                    "Poem Name": myQuery
                   }
                 },
                 {
-                  "Metaphor Count.keyword": {
-                    "order": "desc"
+                  "match": {
+                    "Interpretation": myQuery
                   }
-                }
-            ],
-            "aggs": {
-              "MetaphorCount" : {
-                "terms": {
-                  "field": "Has Metaphor.keyword"
-                }
-              },
-              "PoemName" : {
-                "terms": {
-                  "field": "Poem Name.keyword"
-                } 
-              } 
+                },
+                {
+                  "match": {
+                    "Poem Line": myQuery
+                  }
+                },
+                {
+                  "match": {
+                    "Source Domain": myQuery
+                  }
+                },   
+                {
+                  "match": {
+                    "Target Domain": myQuery
+                  }
+                },
+                {
+                  "match": {
+                    "Metaphoric Terms": myQuery
+                  }
+                },   
+                {
+                  "match": {
+                    "Metaphor Type": myQuery
+                  }
+                },        
+                {
+                  "match": {
+                    "Poet": myQuery
+                  }
+                },   
+                {
+                  "match": {
+                    "Year": myQuery
+                  }
+                }       
+              ]
             }
+          },
+          "sort": [
+            {
+              "Metaphor Count": {
+                "order": "desc"
+              }
+            },
+            {
+            "Has Metaphor": {
+                "order": "desc"
+              }
+            }
+          ],
+          "aggs": {
+            "MetaphorCount" : {
+              "terms": {
+                "field": "Has Metaphor"
+              }
+            },
+            "PoemName" : {
+              "terms": {
+                "field": "Poem Name.keyword"
+              } 
+            } 
+          }
         }
       });
       res.json({

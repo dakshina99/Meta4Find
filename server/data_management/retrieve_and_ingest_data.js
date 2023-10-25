@@ -21,13 +21,13 @@ router.get("/data", async function (req, res) {
       console.log(
         "Creating the Elasticsearch index with custom analyzers and mappings");
 
-      await client.indices.create({
-        "index": "my_test",
-        "body": {
-          "settings": indexSettings,
-          "mappings": customMappings
-        }
-      });
+      // await client.indices.create({
+      //   "index": "my_test",
+      //   "body": {
+      //     "settings": indexSettings,
+      //     "mappings": customMappings
+      //   }
+      // });
 
       console.log("Indexing data...");
 
